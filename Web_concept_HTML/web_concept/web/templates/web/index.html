@@ -3,22 +3,38 @@
 
 {% block body %}
 
-    <h1>Welcome to the Video Games 100</h1>
-    <p>This is a website that provides information about the top 100 video games of all time.</p>
-    <p>Use the navigation bar to explore the different sections of the website.</p>
+<h1>Welcome to the Video Games 100</h1>
+<p>This is a website that provides information about the top 100 video games of all time.</p>
+<p>Use the navigation bar to explore the different sections of the website.</p>
 
 
-    <a href="{% url 'admin:index' %}" target="_blank">Admin Interface</a>
-
-    {% for game in games %}
-        <div>
-            <h2>{{ game.title }}</h2>
-            <img src="{% static game.poster %}" alt="{{ game.title }} poster">
-            <p>{{ game.description }}</p>
-            <p>Screen Time: {{ game.screen_time }} hours</p>
-            {% if game.screenshot %}
-                <img src="{{ game.screenshot.url }}" alt="{{ game.title }} screenshot">
-            {% endif %}
-        </div>
-    {% endfor %}
+<a href="{% url 'admin:index' %}" target="_blank">Admin Interface</a>
+{% for game in games %}
+<div>
+    <a href="{% url 'game' slug=game.slug %}">
+        <h2>{{ game.title }}</h2>
+    </a>
+    <img src="{{ game.poster.url }}" alt="{{ game.title }} poster">
+    <p>{{ game.description }}</p>
+    <p>Genre: {{ game.genre.all|join:", " }}</p>
+    <p>Devs: {{ game.developer.all|join:", " }}</p>
+    <p>Publishers: {{ game.publisher.all|join:", " }}</p>
+    {% if game.screenshot %}
+    <img src="{{ game.screenshot.url }}" alt="{{ game.title }} screenshot">
+    {% endif %}
+</div>
+{% endfor %}
+<h1>Characters</h1>
+{% for character in characters %}
+<div>
+    <img src="{{ character.img.url }}" alt="{{ character.name }} image">
+    <h3>{{ character.name }}</h3>
+    <p>Role: {{ character.role }}</p>
+    <p>Description: {{ character.description }}</p>
+    <p>Screen Time: {{ character.screen_time }} hours</p>
+    {% if character.screenshot %}
+    <img src="{{ character.screenshot.url }}" alt="{{ character.name }} screenshot">
+    {% endif %}
+</div>
+{% endfor %}
 {% endblock %}

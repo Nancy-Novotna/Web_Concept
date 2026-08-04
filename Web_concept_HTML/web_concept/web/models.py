@@ -10,6 +10,7 @@ class Game(models.Model):
     publisher = models.ManyToManyField('Publisher', related_name='games')
     description = models.TextField()
     poster = models.ImageField(upload_to='posters/', blank=True, null=True)
+    slug = models.SlugField(unique=True, max_length=100, blank=True, null=True)
     
 
     def __str__(self):
@@ -42,7 +43,7 @@ class Achievement(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
     difficulty = models.IntegerField()
-    img = models.ImageField(upload_to='achievements/', blank=True, null=True)
+    img = models.ImageField(upload_to='achievement/', blank=True, null=True)
 
     def __str__(self):
         return f"{self.name} ({self.game.title})"
@@ -62,10 +63,10 @@ class Character(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name='characters')
     name = models.CharField(max_length=100)
     role = models.CharField(max_length=100)
-    img = models.ImageField(upload_to='characters/')
+    img = models.ImageField(upload_to='character/', blank=True, null=True)
     description = models.TextField()
     screen_time = models.IntegerField()
-    screenshot = models.ImageField(upload_to='screenshots/', blank=True, null=True)
+    screenshot = models.ImageField(upload_to='character_screenshots/', blank=True, null=True)
 
     def __str__(self):
         return f"{self.name} ({self.game.title})"
@@ -73,7 +74,7 @@ class Character(models.Model):
 class Screenshot(models.Model):
     id = models.CharField(primary_key=True, max_length=100)
     game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name='screenshots')
-    img = models.ImageField(upload_to='screenshots/')
+    img = models.ImageField(upload_to='screenshots/', blank=True, null=True)
 
     def __str__(self):
         return f"Screenshot of {self.game.title}"
