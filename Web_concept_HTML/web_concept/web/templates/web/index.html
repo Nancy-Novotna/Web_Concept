@@ -9,4 +9,16 @@
 
 
     <a href="{% url 'admin:index' %}" target="_blank">Admin Interface</a>
+
+    {% for game in games %}
+        <div>
+            <h2>{{ game.title }}</h2>
+            <img src="{% static game.poster %}" alt="{{ game.title }} poster">
+            <p>{{ game.description }}</p>
+            <p>Screen Time: {{ game.screen_time }} hours</p>
+            {% if game.screenshot %}
+                <img src="{{ game.screenshot.url }}" alt="{{ game.title }} screenshot">
+            {% endif %}
+        </div>
+    {% endfor %}
 {% endblock %}

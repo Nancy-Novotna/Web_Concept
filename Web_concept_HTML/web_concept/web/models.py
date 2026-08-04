@@ -9,6 +9,7 @@ class Game(models.Model):
     developer = models.ManyToManyField('Developer', related_name='games')
     publisher = models.ManyToManyField('Publisher', related_name='games')
     description = models.TextField()
+    poster = models.ImageField(upload_to='posters/', blank=True, null=True)
     
 
     def __str__(self):
@@ -36,11 +37,12 @@ class Publisher(models.Model):
     def __str__(self):
         return self.name
     
-class Achievements(models.Model):
+class Achievement(models.Model):
     game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name='achievements')
     name = models.CharField(max_length=100)
     description = models.TextField()
     difficulty = models.IntegerField()
+    img = models.ImageField(upload_to='achievements/', blank=True, null=True)
 
     def __str__(self):
         return f"{self.name} ({self.game.title})"
@@ -55,7 +57,7 @@ class Timeline(models.Model):
     def __str__(self):
         return f"{self.event} ({self.game.title})"
     
-class Characters(models.Model):
+class Character(models.Model):
     id = models.CharField(primary_key=True, max_length=100)
     game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name='characters')
     name = models.CharField(max_length=100)
@@ -68,7 +70,7 @@ class Characters(models.Model):
     def __str__(self):
         return f"{self.name} ({self.game.title})"
     
-class Screenshots(models.Model):
+class Screenshot(models.Model):
     id = models.CharField(primary_key=True, max_length=100)
     game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name='screenshots')
     img = models.ImageField(upload_to='screenshots/')
