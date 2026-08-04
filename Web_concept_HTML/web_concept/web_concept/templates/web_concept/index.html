@@ -1,0 +1,12 @@
+{% extends "videogames_100/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+    <h1>Welcome to the Video Games 100</h1>
+    <p>This is a website that provides information about the top 100 video games of all time.</p>
+    <p>Use the navigation bar to explore the different sections of the website.</p>
+
+
+    <a href="{% url 'admin:index' %}" target="_blank">Admin Interface</a>
+{% endblock %}
