@@ -10,31 +10,8 @@
 
 <a href="{% url 'admin:index' %}" target="_blank">Admin Interface</a>
 {% for game in games %}
-<div>
-    <a href="{% url 'game' slug=game.slug %}">
-        <h2>{{ game.title }}</h2>
-    </a>
-    <img src="{{ game.poster.url }}" alt="{{ game.title }} poster">
-    <p>{{ game.description }}</p>
-    <p>Genre: {{ game.genre.all|join:", " }}</p>
-    <p>Devs: {{ game.developer.all|join:", " }}</p>
-    <p>Publishers: {{ game.publisher.all|join:", " }}</p>
-    {% if game.screenshot %}
-    <img src="{{ game.screenshot.url }}" alt="{{ game.title }} screenshot">
-    {% endif %}
-</div>
-{% endfor %}
-<h1>Characters</h1>
-{% for character in characters %}
-<div>
-    <img src="{{ character.img.url }}" alt="{{ character.name }} image">
-    <h3>{{ character.name }}</h3>
-    <p>Role: {{ character.role }}</p>
-    <p>Description: {{ character.description }}</p>
-    <p>Screen Time: {{ character.screen_time }} hours</p>
-    {% if character.screenshot %}
-    <img src="{{ character.screenshot.url }}" alt="{{ character.name }} screenshot">
-    {% endif %}
-</div>
+<a href="{% url 'game' slug=game.slug %}">
+    <h2>{{ game.title }}</h2>
+</a>
 {% endfor %}
 {% endblock %}

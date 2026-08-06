@@ -51,12 +51,13 @@ class Achievement(models.Model):
 class Timeline(models.Model):
     id = models.CharField(primary_key=True, max_length=100)
     game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name='timelines')
-    event = models.CharField(max_length=200)
-    date = models.DateField()
+    playtime_range = models.CharField(max_length=100, blank=True, null=True)
+    main_story_playtime = models.IntegerField(blank=True, null=True)
+    completionist_playtime = models.IntegerField(blank=True, null=True)
     description = models.TextField()
 
     def __str__(self):
-        return f"{self.event} ({self.game.title})"
+        return f"{self.game.title} Timeline"
     
 class Character(models.Model):
     id = models.CharField(primary_key=True, max_length=100)

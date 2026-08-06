@@ -1,15 +1,69 @@
 {% extends "web/layout.html" %}
 {% load static %}
 
+{% block title %}{{ game.title }}{% endblock %}
+
 {% block body %}
 
-<h1>{{ game.title }}</h1>
+<nav>
+    <li><a href="{% url 'index' %}">Home</a></li>
+    <li><a href="/">Games</a></li>
+    <li><a href="/">About</a></li>
+    <li><a href="/">Login</a></li>
+</nav>
 
+<section id="intro">
 
+    <h1 class="title">{{ game.title }}</h1>
+    <img class="poster" src="{{ game.poster.url }}" alt="{{ game.title }} poster">
+    <p>{{ game.description }}</p>
 
+</section>
 
+<section id="characters">
 
+    <h2>Characters</h2>
+    {% for character in game.characters.all %}
+    <div class="character">
+        <img src="{{ character.img.url }}" alt="{{ character.name }} image">
+        <h3>{{ character.name }}</h3>
+    </div>
+    {% endfor %}
+</section>
 
+<section id="timeline">
 
+    <h1>Timeline</h1>
+    {% for timeline in game.timelines.all %}
+        <h2>Playtime range: {{ timeline.playtime_range }}</h2>
+        <p>Main Story Playtime: {{ timeline.main_story_playtime }} hours</p>
+        <p>Completionist Playtime: {{ timeline.completionist_playtime }} hours</p>
+        <p>{{ timeline.description }}</p>
+        <p>Trying to get every single achievement is going to take more than {{ timeline.completionist_playtime }} hours. Approximate play-time may vary by player.</p>
+        <br>
+    {% endfor %}
+
+</section>
+
+<section id="achievements">
+
+    <h1>Achievements</h1>
+    {% for achievement in game.achievements.all %}
+        <h1>{{ achievement.name }}</h1>
+        <img src="{{ achievement.img.url }}" alt="{{ achievement.name }} image">
+        <p>{{ achievement.description }}</p>
+        <br>
+    {% endfor %}
+
+</section>
+
+<section id="screenshots">
+
+    <h1>Screenshots</h1>
+    {% for screenshot in game.screenshots.all %}
+        <img src="{{ screenshot.img.url }}" alt="{{ game.title }} screenshot">
+    {% endfor %}
+
+</section>
 
 {% endblock %}
