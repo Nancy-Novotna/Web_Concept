@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 class Game(models.Model):
-    id = models.CharField(primary_key=True, max_length=100)
+    id = models.IntegerField(primary_key=True)
     title = models.CharField(max_length=100)
     genre = models.ManyToManyField('Genre', related_name='games')
     release_date = models.DateField()
@@ -23,7 +23,7 @@ class Genre(models.Model):
         return self.name
 
 class Developer(models.Model):
-    id = models.CharField(primary_key=True, max_length=100)
+    id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=100)
     hq = models.CharField(max_length=100)
 
@@ -31,7 +31,7 @@ class Developer(models.Model):
         return self.name
     
 class Publisher(models.Model):
-    id = models.CharField(primary_key=True, max_length=100)
+    id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=100)
     hq = models.CharField(max_length=100)
 
@@ -60,7 +60,7 @@ class Timeline(models.Model):
         return f"{self.game.title} Timeline"
     
 class Character(models.Model):
-    id = models.CharField(primary_key=True, max_length=100)
+    id = models.IntegerField(primary_key=True)
     game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name='characters')
     name = models.CharField(max_length=100)
     role = models.CharField(max_length=100)
@@ -69,11 +69,14 @@ class Character(models.Model):
     screen_time = models.IntegerField()
     screenshot = models.ImageField(upload_to='character_screenshots/', blank=True, null=True)
 
+    class Meta:
+        ordering = ['id']
+
     def __str__(self):
         return f"{self.name} ({self.game.title})"
     
 class Screenshot(models.Model):
-    id = models.CharField(primary_key=True, max_length=100)
+    id = models.IntegerField(primary_key=True)
     game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name='screenshots')
     img = models.ImageField(upload_to='screenshots/', blank=True, null=True)
 
